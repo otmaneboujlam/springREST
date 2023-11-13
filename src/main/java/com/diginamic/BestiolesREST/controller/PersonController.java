@@ -1,9 +1,12 @@
 package com.diginamic.BestiolesREST.controller;
 
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +25,8 @@ import jakarta.websocket.server.PathParam;
 @RestController
 @RequestMapping("/rest/person")
 public class PersonController {
+	
+//	private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
 	private PersonService personService;
@@ -38,6 +43,9 @@ public class PersonController {
 	
 	@GetMapping
 	public Page<Person> findAll(@PathParam("pageable") Pageable pageable) {
+//		LOG.info("Bonjour Slf4J : info");
+//		LOG.warn("Bonjour Slf4J : warn");
+//		LOG.error("Bonjour Slf4J : error");
 		return personService.findAll(pageable);
 	}
 	
@@ -45,6 +53,16 @@ public class PersonController {
 	public Person findOne(@PathVariable("id") Integer id) {
 		return personService.findById(id);
 	}
+	
+//	@GetMapping("/{id}")
+//	public ResponseEntity<?> findOne(@PathVariable("id") Integer id) {
+//		if(id < 100) {
+//			return ResponseEntity.ok(personService.findById(id));
+//		}
+//		else {
+//			return ResponseEntity.status(404).build();
+//		}
+//	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteOne(@PathVariable("id") Integer id) {
