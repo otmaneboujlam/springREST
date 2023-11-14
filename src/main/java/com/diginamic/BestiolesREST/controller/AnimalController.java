@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diginamic.BestiolesREST.dto.AnimalDto;
 import com.diginamic.BestiolesREST.entity.Animal;
 import com.diginamic.BestiolesREST.service.AnimalService;
 
@@ -37,7 +38,7 @@ public class AnimalController {
 	}
 	
 	@GetMapping
-	public Page<Animal> findAll(@PathParam("pageable") Pageable pageable) {
+	public Page<AnimalDto> findAll(@PathParam("pageable") Pageable pageable) {
 		return animalService.findAll(pageable);
 	}
 	

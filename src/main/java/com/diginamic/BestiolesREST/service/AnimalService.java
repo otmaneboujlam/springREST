@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.diginamic.BestiolesREST.dto.AnimalDto;
 import com.diginamic.BestiolesREST.entity.Animal;
 import com.diginamic.BestiolesREST.exception.EntityToCreateHasAnIdException;
 import com.diginamic.BestiolesREST.exception.EntityToUpdateHasNoIdException;
+import com.diginamic.BestiolesREST.mapper.AnimalDtoMapper;
 import com.diginamic.BestiolesREST.repository.AnimalRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +19,9 @@ import jakarta.validation.Valid;
 
 @Service
 public class AnimalService {
+	
+	@Autowired
+	private AnimalDtoMapper animalDtoMapper;
 	
 	@Autowired
 	private AnimalRepository animalRepository;
@@ -39,8 +44,8 @@ public class AnimalService {
 		return this.animalRepository.save(updatedAnimal);
 	}
 	
-	public Page<Animal> findAll(Pageable pageable) {
-		return this.animalRepository.findAll(pageable);
+	public Page<AnimalDto> findAll(Pageable pageable) {
+		return animalRepository.findAll(pageable).map((animal) -> animalDtoMapper.toDto(animal));
 	}
 	
 	public Animal findById(Integer id) {

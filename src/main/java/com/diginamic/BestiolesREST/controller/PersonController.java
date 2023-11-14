@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diginamic.BestiolesREST.dto.PersonDto;
 import com.diginamic.BestiolesREST.entity.Person;
 import com.diginamic.BestiolesREST.service.PersonService;
 
@@ -38,7 +39,7 @@ public class PersonController {
 	}
 	
 	@GetMapping
-	public Page<Person> findAll(@PathParam("pageable") Pageable pageable) {
+	public Page<PersonDto> findAll(@PathParam("pageable") Pageable pageable) {
 		return personService.findAll(pageable);
 	}
 	
@@ -46,16 +47,6 @@ public class PersonController {
 	public Person findOne(@PathVariable("id") Integer id) {
 		return personService.findById(id);
 	}
-	
-//	@GetMapping("/{id}")
-//	public ResponseEntity<?> findOne(@PathVariable("id") Integer id) {
-//		if(id < 100) {
-//			return ResponseEntity.ok(personService.findById(id));
-//		}
-//		else {
-//			return ResponseEntity.status(404).build();
-//		}
-//	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteOne(@PathVariable("id") Integer id) {

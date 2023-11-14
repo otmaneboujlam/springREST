@@ -7,9 +7,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.diginamic.BestiolesREST.dto.PersonDto;
 import com.diginamic.BestiolesREST.entity.Person;
 import com.diginamic.BestiolesREST.exception.EntityToCreateHasAnIdException;
 import com.diginamic.BestiolesREST.exception.EntityToUpdateHasNoIdException;
+import com.diginamic.BestiolesREST.mapper.PersonDtoMapper;
 import com.diginamic.BestiolesREST.repository.PersonRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +19,9 @@ import jakarta.validation.Valid;
 
 @Service
 public class PersonService {
+	
+	@Autowired
+	private PersonDtoMapper personDtoMapper; 
 	
 	@Autowired
 	private PersonRepository personRepository;
@@ -39,8 +44,8 @@ public class PersonService {
 		return this.personRepository.save(updatedPerson);
 	}
 	
-	public Page<Person> findAll(Pageable pageable) {
-		return this.personRepository.findAll(pageable);
+	public Page<PersonDto> findAll(Pageable pageable) {
+		return personRepository.findAll(pageable).map((person) -> personDtoMapper.toDto(person));
 	}
 	
 	public Person findById(Integer id) {

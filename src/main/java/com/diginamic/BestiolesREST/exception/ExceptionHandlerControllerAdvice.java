@@ -1,5 +1,6 @@
 package com.diginamic.BestiolesREST.exception;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,18 @@ public class ExceptionHandlerControllerAdvice {
 				request.getDescription(false),
 				exception.getBindingResult().getGlobalErrors(),
 				exception.getBindingResult().getFieldErrors()
+				);
+	}
+	
+	@ExceptionHandler({SQLIntegrityConstraintViolationException.class})
+	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED)
+	public ErrorDto handleExceptionSQLIntegrityConstraintViolation(SQLIntegrityConstraintViolationException exception, WebRequest request) {
+		//exception.printStackTrace();
+		return new ErrorDto(
+				HttpStatus.METHOD_NOT_ALLOWED.value(), 
+				LocalDateTime.now(), 
+				exception.getMessage(), 
+				request.getDescription(false)
 				);
 	}
 }
