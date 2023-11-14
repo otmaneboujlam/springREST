@@ -1,8 +1,5 @@
 package com.diginamic.BestiolesREST.controller;
 
-
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +23,6 @@ import jakarta.websocket.server.PathParam;
 @RequestMapping("/rest/person")
 public class PersonController {
 	
-//	private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
 	private PersonService personService;
@@ -43,9 +39,6 @@ public class PersonController {
 	
 	@GetMapping
 	public Page<Person> findAll(@PathParam("pageable") Pageable pageable) {
-//		LOG.info("Bonjour Slf4J : info");
-//		LOG.warn("Bonjour Slf4J : warn");
-//		LOG.error("Bonjour Slf4J : error");
 		return personService.findAll(pageable);
 	}
 	
