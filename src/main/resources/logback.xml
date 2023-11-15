@@ -4,7 +4,7 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<withJansi>true</withJansi>
 		<encoder>
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %logger{36} -%msg%n</pattern>
+			<pattern>%d{HH:mm:ss.SSS} %highlight(%-5level) [%-20(%thread)] %-40(%0.40logger{36}) : %highlight(%msg%n)</pattern>
 		</encoder>
 	</appender>
 	<!-- regle de logs par defaut. Ici : niveau INFO vers la sortie standard -->

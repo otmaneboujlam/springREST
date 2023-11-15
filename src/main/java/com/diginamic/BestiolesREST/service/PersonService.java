@@ -1,6 +1,6 @@
 package com.diginamic.BestiolesREST.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,15 +37,18 @@ public class PersonService {
 		if(updatedPerson.getId() == null) {
 			throw new EntityToUpdateHasNoIdException("Entity To Update Has No Id");
 		}
-		Optional<Person> personOpt = personRepository.findById(updatedPerson.getId());
-		if(personOpt.isEmpty()) {
+		if(!personRepository.existsById(updatedPerson.getId())) {
 			throw new EntityNotFoundException("Entity Not Found");
 		}
 		return this.personRepository.save(updatedPerson);
 	}
 	
-	public Page<PersonDto> findAll(Pageable pageable) {
+	public Page<PersonDto> findPage(Pageable pageable) {
 		return personRepository.findAll(pageable).map((person) -> personDtoMapper.toDto(person));
+	}
+	
+	public List<PersonDto> findAll() {
+		return personRepository.findAll().stream().map((person) -> personDtoMapper.toDto(person)).toList();
 	}
 	
 	public Person findById(Integer id) {
@@ -53,8 +56,7 @@ public class PersonService {
 	}
 	
 	public void deleteById(Integer id) {
-		Optional<Person> personOpt = personRepository.findById(id);
-		if(personOpt.isEmpty()) {
+		if(!personRepository.existsById(id)) {
 			throw new EntityNotFoundException("Entity Not Found");
 		}
 		personRepository.deleteById(id);

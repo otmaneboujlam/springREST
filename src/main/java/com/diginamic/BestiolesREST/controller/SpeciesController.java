@@ -1,6 +1,8 @@
 package com.diginamic.BestiolesREST.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,9 +38,14 @@ public class SpeciesController {
 		return speciesService.update(updatedSpecies);
 	}
 	
-	@GetMapping
-	public Page<Species> findAll(@PathParam("pageable") Pageable pageable) {
-		return speciesService.findAll(pageable);
+	@GetMapping("/page")
+	public Page<Species> findPage(@PathParam("pageable") Pageable pageable) {
+		return speciesService.findPage(pageable);
+	}
+	
+	@GetMapping("/all")
+	public List<Species> findAll() {
+		return speciesService.findAll();
 	}
 	
 	@GetMapping("/{id}")
